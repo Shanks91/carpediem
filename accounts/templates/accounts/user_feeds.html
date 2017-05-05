@@ -1,0 +1,21 @@
+{% extends 'accounts/base.html' %}
+{% block afeeds %}active{% endblock %}
+{% block body %}
+    <div class="container">
+    <h2>User is following:</h2>
+    <ul>
+    {% for ngo in ngos %}
+        <li>{{ ngo }}</li>
+    {% endfor %}
+
+    </ul>
+    <hr/>
+    <h2>Feeds:</h2>
+    <ul>
+    {% for happening in happenings %}
+        <li>{{ happening.content }}</li>
+    {% endfor %}
+
+    </ul>
+    </div>
+{% endblock %}

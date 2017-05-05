@@ -1,0 +1,13 @@
+{% extends 'accounts/base.html' %}
+{% block aordinem %}active{% endblock %}
+{% block body %}
+    <div class="container">
+<h2>List of Ngos</h2>
+<ul>
+    {% for ngo in ngo_list %}
+    <li><a href="{% url 'ngoprofile' pk=ngo.pk %}">{{ ngo.name }}</a></li>
+    {% endfor %}
+</ul>
+    </div>
+{% endblock %}
+
