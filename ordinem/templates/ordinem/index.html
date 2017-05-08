@@ -28,7 +28,7 @@
 
                 <div class="container">
 				<div class="gallery-box clearfix">
-					<a class="gallery-a" href="{% url 'ngo_profile' pk=ngo.id %}"><img src="{{ ngo.logo }}" alt="img"></a>
+					<a class="gallery-a" href="{% url 'ngo_profile' pk=ngo.id %}"><img src="{{ ngo.logo.url }}" alt="img"></a>
 					<div class="gallery-info">
 						<h3><a href = "{% url 'ngo_profile' pk=ngo.id %}">{{ ngo.name }}</a></h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab architecto aut corporis cumque dignissimos eos exercitationem facere labore labori.</p>
