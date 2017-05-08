@@ -58,6 +58,7 @@
                     <ul class="dropdown-menu">
                     <li><a href="{% url 'profile_detail' pk=request.user.id %}">Profile</a></li>
                     <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'ngo_signup' %}">Register an Organization</a></li>
                         <li><a href="{% url 'article_create' %}">Write Article</a></li>
                         <li><a href="{% url 'article_draft'%}">Article Drafts <span class="badge">{{ drafts }}</span></a></li>
                     <li role="separator" class="divider"></li>
