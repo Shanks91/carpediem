@@ -58,6 +58,7 @@
                     <ul class="dropdown-menu">
                     <li><a href="{% url 'profile_detail' pk=request.user.id %}">Profile</a></li>
                     <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'article_create' %}">Write Article</a></li>
                         <li><a href="{% url 'article_draft'%}">Article Drafts <span class="badge">{{ drafts }}</span></a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
@@ -90,14 +91,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <!--<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>-->
-    <script
-  src="https://code.jquery.com/jquery-1.12.4.min.js"
-  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-  crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
     <script src="{% static 'js/article_create.js' %}"></script>
   </body>
