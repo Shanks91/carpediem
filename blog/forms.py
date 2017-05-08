@@ -5,7 +5,7 @@ from .models import Article, BlogComment
 
 class ArticleForm(forms.ModelForm):
 
-    content = forms.CharField(widget=PagedownWidget)
+    content = forms.CharField(widget=PagedownWidget(show_preview=False))
 
     class Meta:
         model = Article

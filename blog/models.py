@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from markdown_deux import markdown
+from django.utils.safestring import mark_safe
 
 
 class Article(models.Model):
@@ -19,6 +21,11 @@ class Article(models.Model):
 
     def get_article_id(self):
         return self.id
+
+    def get_content_markdown(self):
+        content = self.content
+        markdown_text = markdown(content)
+        return mark_safe(markdown_text)
 
 
 class BlogComment(models.Model):

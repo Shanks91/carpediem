@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'ordinem',
     'accounts',
     'pagedown',
+    'markdown_deux',
     'blog',
     'imagekit',
 
