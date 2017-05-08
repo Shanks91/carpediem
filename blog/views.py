@@ -39,8 +39,21 @@ def article_publish(request, pk):
     return redirect('article_draft')
 
 
-def article_edit(request):
-    return render(request, '', '')
+@login_required()
+def article_edit(request, pk):
+    article = get_object_or_404(Article, id=pk)
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.save()
+            return redirect('article_detail', pk=pk)
+        else:
+            return render(request, 'blog/articlecreate.html', {'form': form})
+    else:
+        form = ArticleForm(instance=article)
+        return render(request, 'blog/articlecreate.html', {'form': form})
+    return render(request, 'blog/articlecreate.html', {'form': form})
 
 
 def article_detail(request, pk):
