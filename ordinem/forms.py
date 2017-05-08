@@ -6,7 +6,7 @@ class NgoForm(forms.ModelForm):
 
     class Meta:
         model = Ngo
-        exclude = ('moderator',)
+        exclude = ('moderator', 'rating')
 
 
 class HappeningForm(forms.ModelForm):

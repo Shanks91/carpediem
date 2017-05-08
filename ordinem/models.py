@@ -13,6 +13,7 @@ class Ngo(models.Model):
     logo = models.ImageField(upload_to='logos/', null=True)
     creation_date = models.DateTimeField(auto_now=True, blank=True)
     rating = models.IntegerField(default=0)
+    bio = models.TextField(null=True)
 
     def __str__(self):
         return self.name
