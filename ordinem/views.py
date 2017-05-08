@@ -33,6 +33,7 @@ def ngoprofile(request, pk):
     comments = HapComments.objects.filter(comment_on__in=happenings)
     return render(request, 'ordinem/detail2.html', {'ngo': ngo, 'happenings': happenings, 'comments': comments})
 
+
 @login_required()
 def post_happening(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
