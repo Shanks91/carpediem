@@ -1,12 +1,22 @@
 {% extends 'accounts/base.html' %}
+{% load static %}
 {% block head %}
     {{ form.media }}
+    <link type="text/css" rel="stylesheet" href="{% static "css/blog-create.css" %}">
 {% endblock %}
 {% load crispy_forms_tags %}
 {% block body %}
     <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-7">
+            <h2>Preview</h2>
+            <hr/>
+            <div class="content-preview">
+                <h2 id="preview-title"></h2>
+                <p id="preview-content"></p>
+            </div>
+        </div>
+        <div class="col-sm-5">
 <h2>Write Article</h2>
             <hr/>
   <form method="post" class="form col-md-12 center-block" action="" enctype="multipart/form-data">
