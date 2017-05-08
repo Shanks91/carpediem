@@ -51,7 +51,7 @@ def post_happening(request, pk):
 
 
 @login_required()
-def follow_ngo(request, upk, npk):
+def follow_ngo(request, npk, upk):
     user = get_object_or_404(User, id=upk)
     ngo = get_object_or_404(Ngo, id=npk)
     user.profile.follows.add(ngo)
