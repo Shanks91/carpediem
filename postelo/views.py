@@ -38,7 +38,7 @@ def message_detail(request, pk):
     if not message.is_read:
         message.is_read = True
         message.save()
-    return render(request, '', {'message': message})
+    return render(request, 'postelo/mesg_detail.html', {'message': message})
 
 
 def message_drafts(request):
