@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'markdown_deux',
     'blog',
     'imagekit',
+    'postelo',
 
 
 ]
@@ -75,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'blog.context_processors.drafts_processor',
+                'postelo.context_processors.mail_processor',
             ],
         },
     },

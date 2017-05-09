@@ -1,0 +1,40 @@
+{% extends 'accounts/base.html' %}
+{% block body %}
+    <div class="container">
+    <div class="row">
+        <h2>Inbox</h2>
+        <hr/>
+        <div class="col-md-8 col-md-offset-4">
+            <a href="{% url 'message_inbox' %}" class="btn btn-default"><span class="glyphicon glyphicon-triangle-left"></span></a>
+        </div>
+    </div>
+    <div class="row">
+        <hr/>
+    </div>
+    <div class="row">
+         <div class="col-md-4">
+            <div class="list-group">
+              <li class="list-group-item"><a class="btn btn-success btn-block" href="{% url 'message_compose' %}">Compose</a></li>
+              <a href="{% url 'message_inbox' %}" class="list-group-item">Inbox
+              <span class="badge">{{ mail_inbox_unread }}</span>
+              </a>
+              <a href="{% url 'message_drafts' %}" class="list-group-item">Drafts
+              <span class="badge">{{ mail_drafts }}</span>
+              </a>
+              <a href="{% url 'message_sent' %}" class="list-group-item">Sent
+              <span class="badge">{{ mail_sent }}</span>
+              </a>
+              <a href="#" class="list-group-item">Trash</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h4>{{ message.sender.username }}</h4>
+            <h5>{{ message.subject }}</h5>
+            <p>{{ message.content }}</p>
+        </div>
+
+    </div>
+
+
+    </div>
+{% endblock %}
