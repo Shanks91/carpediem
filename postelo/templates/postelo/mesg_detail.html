@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-8">
             <a href="#"  onclick="window.history.back()" class="btn btn-default keep-inline"><span class="glyphicon glyphicon-triangle-left"></span></a>
-            <a href="#" class="btn btn-default keep-inline pull-right"><span class="glyphicon glyphicon-trash"></span></a>
+            <a href="{% url 'message_delete' pk=message.id %}" class="btn btn-default keep-inline pull-right"><span class="glyphicon glyphicon-trash"></span></a>
         </div>
     </div>
     <hr/>

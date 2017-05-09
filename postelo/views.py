@@ -4,7 +4,8 @@ from .models import Message
 
 
 def message_index(request):
-    messages = Message.objects.all().filter(recipient=request.user).filter(draft=False).order_by('-time_stamp')
+    messages = Message.objects.all().filter(recipient=request.user).filter(draft=False).filter(is_trash=False)\
+        .order_by('-time_stamp')
     return render(request, 'postelo/mesg_index.html', {'messages': messages})
 
 
@@ -55,14 +56,14 @@ def message_sent(request):
 def message_delete(request, pk):
     message = get_object_or_404(Message, id=pk)
     message.delete()
-    return redirect('message_index')
+    return redirect('message_inbox')
 
 
 def message_into_trash(request, pk):
     message = get_object_or_404(Message, id=pk)
     message.is_trash = True
     message.save()
-    return redirect('message_index')
+    return redirect('message_inbox')
 
 
 def message_trash(request):
