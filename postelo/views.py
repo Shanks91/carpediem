@@ -56,3 +56,15 @@ def message_delete(request, pk):
     message = get_object_or_404(Message, id=pk)
     message.delete()
     return redirect('message_index')
+
+
+def message_into_trash(request, pk):
+    message = get_object_or_404(Message, id=pk)
+    message.is_trash = True
+    message.save()
+    return redirect('message_index')
+
+
+def message_trash(request):
+    messages = Message.objects.all().filter(recipient=request.user).filter(is_trash=True).order_by('-time_stamp')
+    return render(request, 'postelo/mesg_trash.html', {'messages': messages})

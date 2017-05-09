@@ -29,7 +29,9 @@
               <a href="{% url 'message_sent' %}" class="list-group-item">Sent
               <span class="badge">{{ mail_sent }}</span>
               </a>
-              <a href="#" class="list-group-item">Trash</a>
+              <a href="{% url 'message_trash' %}" class="list-group-item">Trash
+              <span class="badge">{{ mail_trash }}</span>
+              </a>
             </div>
         </div>
         <div class="col-md-8">

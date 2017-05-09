@@ -10,4 +10,5 @@ class Message(models.Model):
     draft = models.BooleanField(default=False)
     is_read = models.BooleanField(default=False)
     time_stamp = models.DateTimeField(auto_now=True)
+    is_trash = models.BooleanField(default=False)
 
