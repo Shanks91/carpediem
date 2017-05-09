@@ -1,7 +1,12 @@
 {% extends 'accounts/base.html' %}
+{% load static %}
 {% block afeeds %}active{% endblock %}
+{% block stylesheet %}
+    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
 {% block body %}
     <div class="container">
+    <div class="row">
     <h2>User is following:</h2>
     <ul>
     {% for ngo in ngos %}
@@ -17,5 +22,6 @@
     {% endfor %}
 
     </ul>
+    </div>
     </div>
 {% endblock %}

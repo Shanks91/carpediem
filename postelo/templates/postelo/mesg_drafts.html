@@ -1,6 +1,7 @@
 {% extends 'accounts/base.html' %}
 {% load static %}
 {% block stylesheet %}
+    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'css/mailstyle.css' %}" type="text/css" rel="stylesheet">
 {% endblock %}
 {% block body %}
@@ -10,7 +11,7 @@
             <h2>Inbox</h2>
         </div>
         <div class="col-md-8">
-            <button type="button" class="btn btn-default keep-inline"><span class="glyphicon glyphicon-refresh"></span></button>
+            <button type="button" class="btn btn-default keep-inline" onclick="window.location.reload(true)"><span class="glyphicon glyphicon-refresh"></span></button>
         </div>
     </div>
     <hr/>
@@ -21,7 +22,7 @@
               <a href="{% url 'message_inbox' %}" class="list-group-item">Inbox
               <span class="badge">{{ mail_inbox_unread }}</span>
               </a>
-              <a href="{% url 'message_drafts' %}" class="list-group-item">Drafts
+              <a href="{% url 'message_drafts' %}" class="list-group-item active">Drafts
               <span class="badge">{{ mail_drafts }}</span>
               </a>
               <a href="{% url 'message_sent' %}" class="list-group-item">Sent
@@ -48,8 +49,6 @@
         </div>
 
     </div>
-
-
     </div>
 {% endblock %}
 {% block scripts %}

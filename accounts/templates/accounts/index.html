@@ -1,4 +1,8 @@
 {% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+    <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
+{% endblock %}
 {% block ahome %}active{% endblock %}
 {% block body %}
 <!-- SLIDING IMAGES -->

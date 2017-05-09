@@ -6,7 +6,8 @@ def mail_processor(request):
         mail_drafts = Message.objects.filter(sender=request.user).filter(draft=True).count()
         mail_sent = Message.objects.filter(sender=request.user).filter(draft=False).count()
         mail_inbox = Message.objects.filter(recipient=request.user).filter(draft=False).count()
-        mail_inbox_unread = Message.objects.filter(recipient=request.user).filter(draft=False).filter(is_read=False).count()
+        mail_inbox_unread = Message.objects.filter(recipient=request.user).filter(draft=False)\
+            .filter(is_read=False).count()
         return {
             'mail_drafts': mail_drafts,
             'mail_sent': mail_sent,

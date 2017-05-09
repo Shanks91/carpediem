@@ -35,9 +35,10 @@ def message_create(request):
 
 def message_detail(request, pk):
     message = get_object_or_404(Message, id=pk)
-    if not message.is_read:
-        message.is_read = True
-        message.save()
+    if message.sender != request.user:
+        if not message.is_read:
+            message.is_read = True
+            message.save()
     return render(request, 'postelo/mesg_detail.html', {'message': message})
 
 

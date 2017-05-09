@@ -13,12 +13,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
 
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
+
     {% block stylesheet %}
     {% endblock %}
 
@@ -53,6 +52,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
+                    <li><a href="{% url 'message_inbox' %}">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                        Inbox
+                        <span class="badge">{{ mail_inbox_unread }}</span>
+                    </a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; @{{ user.username }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -77,10 +81,9 @@
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-
     {% block body %}
     {% endblock %}
-      <hr>
+    <hr>
     <div class="container">
       <footer>
         <p>&copy; 2017 CarpeDiem, Inc.</p>

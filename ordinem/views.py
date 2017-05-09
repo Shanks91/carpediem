@@ -14,7 +14,7 @@ def createngo(request):
             ngo.moderator = request.user
             ngo.save()
             key = ngo.get_live_id()
-            return redirect('ngoprofile', pk=key)
+            return redirect('ngo_profile', pk=key)
         else:
             return render(request, 'ordinem/create.html', {'form': form})
     else:
@@ -43,7 +43,7 @@ def post_happening(request, pk):
             happening = form.save(commit=False)
             happening.author = ngo
             happening.save()
-            return redirect('ngoprofile', pk=pk)
+            return redirect('ngo_profile', pk=pk)
         else:
             return render(request, 'ordinem/post_h.html', {'form': form})
     else:
@@ -56,7 +56,7 @@ def follow_ngo(request, npk, upk):
     user = get_object_or_404(User, id=upk)
     ngo = get_object_or_404(Ngo, id=npk)
     user.profile.follows.add(ngo)
-    return redirect('ngoprofile', pk=npk)
+    return redirect('ngo_profile', pk=npk)
 
 
 @login_required()
@@ -85,7 +85,7 @@ def gallery_view(request, pk):
 def ngo_like(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
     ngo.rate()
-    return redirect('ngoprofile', pk=pk)
+    return redirect('ngo_profile', pk=pk)
 
 
 @login_required()
