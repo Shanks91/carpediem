@@ -30,6 +30,26 @@ class Ngo(models.Model):
     def get_live_id(self):
         return self.pk
 
+    def calculate_ratings(self):
+        five_star_count = NgoRatings.objects.filter(ngo=self).filter(rating=5).count()
+        four_star_count = NgoRatings.objects.filter(ngo=self).filter(rating=4).count()
+        three_star_count = NgoRatings.objects.filter(ngo=self).filter(rating=3).count()
+        two_star_count = NgoRatings.objects.filter(ngo=self).filter(rating=2).count()
+        one_star_count = NgoRatings.objects.filter(ngo=self).filter(rating=1).count()
+
+        sum_star = five_star_count + four_star_count + three_star_count + two_star_count + one_star_count
+
+        a = 5 * five_star_count
+        b = 4 * four_star_count
+        c = 3 * three_star_count
+        d = 2 * two_star_count
+        e = one_star_count
+
+        ratings = (a + b + c + d + e) / sum_star
+
+        self.rating = ratings
+        self.save()
+
 
 class Happening(models.Model):
     content = models.TextField()
@@ -48,3 +68,9 @@ class HapComments(models.Model):
     comment_on = models.ForeignKey(Happening, on_delete=models.CASCADE, related_name='comment_of')
     content = models.TextField()
     time_stamp = models.DateTimeField(auto_now=True, blank=True)
+
+
+class NgoRatings(models.Model):
+    ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name='ratings_of')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratings_by')
+    rating = models.IntegerField()

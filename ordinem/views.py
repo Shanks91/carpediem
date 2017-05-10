@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NgoForm, HappeningForm, GalleryForm, HapCommentsForm
+from .forms import NgoForm, HappeningForm, GalleryForm, HapCommentsForm, NgoRatingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Ngo, Happening, Gallery, HapComments
@@ -105,3 +105,23 @@ def post_comment(request, pk):
     else:
         form = HapCommentsForm()
         return render(request, 'ordinem/comment.html', {'form': form})
+
+
+@login_required()
+def rate_ngo(request, pk):
+    ngo = get_object_or_404(Ngo, id=pk)
+    user = request.user
+    if request.method == 'POST':
+        form = NgoRatingForm(request.POST)
+        if form.is_valid():
+            rating = form.save(commit=False)
+            rating.user = user
+            rating.ngo = ngo
+            rating.save()
+            ngo.calculate_ratings()
+            return redirect('ngo_profile', pk=pk)
+        else:
+            return render(request, 'ordinem/rating_form.html', {'form': form})
+    else:
+        form = NgoRatingForm()
+        return render(request, 'ordinem/rating_form.html', {'form': form})
