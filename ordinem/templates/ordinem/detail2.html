@@ -10,7 +10,7 @@
 <h3>This Organization is Moderated by <a href="{% url 'profile_detail' pk=ngo.moderator.pk %}">@{{ ngo.moderator.username }}</a></h3>
     <a href="{% url 'follow_ngo' npk=ngo.pk upk=request.user.id %}" type="submit" class="btn btn-primary">follow</a>
     <a href="{% url 'gallery' pk=ngo.pk %}" type="submit" class="btn btn-info">Gallery</a>
-    <a href="{% url 'ngo_like' pk=ngo.pk %}" type="submit" class="btn btn-info"><span class="badge">{{ ngo.rating }}</span> Likes</a>
+    <a href="{% url 'ngo_like' pk=ngo.pk %}" type="submit" class="btn btn-info"><span class="badge">{{ ngo.likes }}</span> Likes</a>
 {% if request.user.id == ngo.moderator.id %}
     <a href="{% url 'post_happening' pk=ngo.id %}" type="submit" class="btn btn-success">Post Happening</a>
     <a href="{% url 'post_gallery' pk=ngo.id %}" type="submit" class="btn btn-success">Post Pictures</a>

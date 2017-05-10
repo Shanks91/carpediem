@@ -68,7 +68,7 @@ def post_gallery(request, pk):
             gallery = form.save(commit=False)
             gallery.owner = ngo
             gallery.save()
-            return redirect('gallery_view', pk=pk)
+            return redirect('gallery', pk=pk)
         else:
             return render(request, 'ordinem/post_g.html', {'form': form})
     else:
@@ -84,7 +84,7 @@ def gallery_view(request, pk):
 
 def ngo_like(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
-    ngo.rate()
+    ngo.like()
     return redirect('ngo_profile', pk=pk)
 
 

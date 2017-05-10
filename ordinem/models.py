@@ -12,7 +12,8 @@ class Ngo(models.Model):
     email = models.EmailField(default='name@emample.com')
     logo = models.ImageField(upload_to='logos/', null=True)
     creation_date = models.DateTimeField(auto_now=True, blank=True)
-    rating = models.IntegerField(default=0)
+    rating = models.FloatField(default=0.0)
+    likes = models.IntegerField(default=0)
     bio = models.TextField(null=True)
 
     def __str__(self):
@@ -20,6 +21,10 @@ class Ngo(models.Model):
 
     def rate(self):
         self.rating += 1
+        self.save()
+
+    def like(self):
+        self.likes += 1
         self.save()
 
     def get_live_id(self):
