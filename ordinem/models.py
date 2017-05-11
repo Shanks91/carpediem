@@ -13,7 +13,7 @@ class Ngo(models.Model):
     logo = models.ImageField(upload_to='logos/', null=True)
     creation_date = models.DateTimeField(auto_now=True, blank=True)
     rating = models.FloatField(default=0.0)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name='liked_by', blank=True)
     bio = models.TextField(null=True)
 
     def __str__(self):
@@ -21,10 +21,6 @@ class Ngo(models.Model):
 
     def rate(self):
         self.rating += 1
-        self.save()
-
-    def like(self):
-        self.likes += 1
         self.save()
 
     def get_live_id(self):
@@ -49,6 +45,10 @@ class Ngo(models.Model):
 
         self.rating = ratings
         self.save()
+
+    def get_round_ratings(self):
+        rating_rounded = round(self.rating, 2)
+        return rating_rounded
 
 
 class Happening(models.Model):

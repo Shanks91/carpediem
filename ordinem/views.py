@@ -24,14 +24,20 @@ def createngo(request):
 
 def ngolist(request):
     ngo_list = Ngo.objects.all()
-    return render(request, 'ordinem/index.html', {'ngo_list': ngo_list})
+    return render(request, 'ordinem/ngo_list.html', {'ngo_list': ngo_list})
 
 
 def ngoprofile(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
+    user = request.user
+    is_liked = did_user_liked(user=user, ngo=ngo)
     happenings = Happening.objects.filter(author=ngo).order_by('-id')
     comments = HapComments.objects.filter(comment_on__in=happenings)
-    return render(request, 'ordinem/detail2.html', {'ngo': ngo, 'happenings': happenings, 'comments': comments})
+    return render(request, 'ordinem/detail2.html', {'ngo': ngo,
+                                                    'happenings': happenings,
+                                                    'comments': comments,
+                                                    'is_liked': is_liked,
+                                                    })
 
 
 @login_required()
@@ -82,9 +88,20 @@ def gallery_view(request, pk):
     return render(request, 'ordinem/gallery.html', {'ngo': ngo, 'galleries': galleries})
 
 
+def did_user_liked(user, ngo):
+    if user in ngo.likes.all():
+        return True
+    else:
+        return False
+
+
 def ngo_like(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
-    ngo.like()
+    user = request.user
+    if user in ngo.likes.all():
+        ngo.likes.remove(user)
+    else:
+        ngo.likes.add(user)
     return redirect('ngo_profile', pk=pk)
 
 

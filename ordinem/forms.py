@@ -1,12 +1,12 @@
 from django import forms
-from .models import Ngo, Happening, Gallery, HapComments , NgoRatings
+from .models import Ngo, Happening, Gallery, HapComments, NgoRatings
 
 
 class NgoForm(forms.ModelForm):
 
     class Meta:
         model = Ngo
-        exclude = ('moderator', 'rating')
+        exclude = ('moderator', 'rating', 'like')
 
 
 class HappeningForm(forms.ModelForm):
