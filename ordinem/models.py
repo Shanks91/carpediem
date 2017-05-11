@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 class Ngo(models.Model):
     name = models.CharField(max_length=300)
@@ -15,6 +16,10 @@ class Ngo(models.Model):
     rating = models.FloatField(default=0.0)
     likes = models.ManyToManyField(User, related_name='liked_by', blank=True)
     bio = models.TextField(null=True)
+    logo_list = ImageSpecField(source='logo',
+                                  processors=[ResizeToFill(223, 150)],
+                                  format='JPEG',
+                                  options={'quality': 60})
 
     def __str__(self):
         return self.name
