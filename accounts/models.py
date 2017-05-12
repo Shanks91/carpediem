@@ -28,6 +28,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def is_user_following(self, ngo):
+        if ngo in self.follows.all():
+            return True
+        else:
+            return False
+
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:

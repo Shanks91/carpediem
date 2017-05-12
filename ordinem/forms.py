@@ -13,7 +13,7 @@ class HappeningForm(forms.ModelForm):
 
     class Meta:
         model = Happening
-        exclude = ('author',)
+        exclude = ('author', 'likes')
 
 
 class GalleryForm(forms.ModelForm):

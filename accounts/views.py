@@ -114,8 +114,4 @@ def feeds_view(request):
     user_profile = UserProfile.objects.get(id=user.pk)
     ngos = user_profile.follows.all()
     happenings = Happening.objects.filter(author__in=ngos)
-    """for ngo in ngos:
-        h_list = Happening.objects.filter(author=ngo)
-        happenings = Queryse"""
-
     return render(request, 'accounts/user_feeds.html', {'ngos': ngos, 'happenings': happenings})

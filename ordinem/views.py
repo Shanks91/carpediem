@@ -3,6 +3,7 @@ from .forms import NgoForm, HappeningForm, GalleryForm, HapCommentsForm, NgoRati
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Ngo, Happening, Gallery, HapComments
+from django.core.exceptions import PermissionDenied
 
 
 @login_required()
@@ -30,6 +31,7 @@ def ngolist(request):
 def ngoprofile(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
     user = request.user
+    is_following = user.profile.is_user_following(ngo=ngo)
     is_liked = did_user_liked(user=user, ngo=ngo)
     happenings = Happening.objects.filter(author=ngo).order_by('-id')
     comments = HapComments.objects.filter(comment_on__in=happenings)
@@ -37,6 +39,7 @@ def ngoprofile(request, pk):
                                                     'happenings': happenings,
                                                     'comments': comments,
                                                     'is_liked': is_liked,
+                                                    'is_following': is_following,
                                                     })
 
 
@@ -58,10 +61,47 @@ def post_happening(request, pk):
 
 
 @login_required()
+def edit_happening(request, pk):
+    hap_post = get_object_or_404(Happening, id=pk)
+    ngo = hap_post.author
+    key = hap_post.get_ngo_key()
+    user = request.user
+    if ngo.moderator == user:
+        if request.method == 'POST':
+            form = HappeningForm(request.POST, instance=hap_post)
+            if form.is_valid():
+                form.save()
+                return redirect('ngo_profile', pk=key)
+            else:
+                return render(request, 'ordinem/post_h.html', {'form': form})
+        else:
+            form = HappeningForm(instance=hap_post)
+            return render(request, 'ordinem/post_h.html', {'form': form})
+    else:
+        raise PermissionDenied
+
+
+@login_required()
+def delete_happening(request, pk):
+    hap_post = get_object_or_404(Happening, id=pk)
+    ngo = hap_post.author
+    key = hap_post.get_ngo_key()
+    user = request.user
+    if ngo.moderator == user:
+        hap_post.delete()
+        return redirect('ngo_profile', pk=key)
+    else:
+        raise PermissionDenied
+
+
+@login_required()
 def follow_ngo(request, npk, upk):
     user = get_object_or_404(User, id=upk)
     ngo = get_object_or_404(Ngo, id=npk)
-    user.profile.follows.add(ngo)
+    if user.profile.is_user_following(ngo=ngo):
+        user.profile.follows.remove(ngo)
+    else:
+        user.profile.follows.add(ngo)
     return redirect('ngo_profile', pk=npk)
 
 
@@ -105,9 +145,21 @@ def ngo_like(request, pk):
     return redirect('ngo_profile', pk=pk)
 
 
+def happening_post_like(request, pk):
+    hap_post = get_object_or_404(Happening, id=pk)
+    key = hap_post.get_ngo_key()
+    user = request.user
+    if hap_post.user_liked(user=user):
+        hap_post.likes.remove(user)
+    else:
+        hap_post.likes.add(user)
+    return redirect('ngo_profile', pk=key)
+
+
 @login_required()
 def post_comment(request, pk):
     happening = get_object_or_404(Happening, id=pk)
+    key = happening.get_ngo_key()
     user = request.user
     if request.method == 'POST':
         form = HapCommentsForm(request.POST)
@@ -116,7 +168,7 @@ def post_comment(request, pk):
             comment.author = user
             comment.comment_on = happening
             comment.save()
-            return redirect('ngo_list')
+            return redirect('ngo_profile', pk=key)
         else:
             return render(request, 'ordinem/comment.html', {'form': form})
     else:

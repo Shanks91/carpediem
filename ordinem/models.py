@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+
 class Ngo(models.Model):
     name = models.CharField(max_length=300)
     moderator = models.OneToOneField(User)
@@ -60,6 +61,16 @@ class Happening(models.Model):
     content = models.TextField()
     author = models.ForeignKey(Ngo, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now=True, blank=True)
+    likes = models.ManyToManyField(User, blank=True, related_name='thumbs_up_by')
+
+    def get_ngo_key(self):
+        return self.author.id
+
+    def user_liked(self, user):
+        if user in self.likes.all():
+            return True
+        else:
+            return False
 
 
 class Gallery(models.Model):
