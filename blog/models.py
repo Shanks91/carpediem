@@ -2,15 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from markdown_deux import markdown
 from django.utils.safestring import mark_safe
+from imagekit.models import ImageSpecField
+from imagekit.processors import SmartResize
 
 
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="writen_by")
     title = models.CharField(max_length=400)
     content = models.TextField()
-    pic = models.ImageField(upload_to='/blog/', null=True, blank=True)
+    pic = models.ImageField(upload_to='blog/', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now=True)
     publish = models.BooleanField(default=False)
+    pic_med = ImageSpecField(source='pic',
+                               processors=[SmartResize(900, 300)],
+                               format='JPEG',
+                               options={'quality': 60})
 
     def __str__(self):
         return self.title

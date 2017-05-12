@@ -24,12 +24,17 @@
                 <hr>
 
                 <!-- Date/Time -->
-                <p><span class="glyphicon glyphicon-time"></span> {{ article.timestamp }}</p>
-
+                <p><span class="glyphicon glyphicon-time"></span> {{ article.timestamp }}
+                    {% if request.user == article.author %}
+                <a class="btn btn-default" href="{% url 'article_delete' pk=article.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+                <a class="btn btn-default" href="{% url 'article_edit' pk=article.id %}"><span class="glyphicon glyphicon-edit"></span></a>
+                    {% endif %}
+                </p>
                 <hr>
 
                 <!-- Preview Image -->
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <img class="img-responsive" src="{% if article.pic_med %}{{ article.pic_med.url }}
+                {% else %}http://placehold.it/900x300{% endif %}" alt="">
 
                 <hr>
 
@@ -134,4 +139,7 @@
 
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/article_create.js' %}"></script>
 {% endblock %}

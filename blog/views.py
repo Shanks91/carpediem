@@ -45,15 +45,14 @@ def article_edit(request, pk):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
-            article = form.save(commit=False)
-            article.save()
+            article2 = form.save(commit=False)
+            article2.save()
             return redirect('article_detail', pk=pk)
         else:
             return render(request, 'blog/articlecreate.html', {'form': form})
     else:
         form = ArticleForm(instance=article)
         return render(request, 'blog/articlecreate.html', {'form': form})
-    return render(request, 'blog/articlecreate.html', {'form': form})
 
 
 def article_detail(request, pk):
@@ -78,5 +77,11 @@ def article_detail(request, pk):
     return render(request, 'blog/articledetail.html', {'article': article, 'comments': comments, 'form': form})
 
 
-def article_delete(request):
-    return render(request, '',)
+def article_delete(request, pk):
+    article = get_object_or_404(Article, id=pk)
+    user = request.user
+    if user == article.author:
+        article.delete()
+    else:
+        raise PermissionDenied
+    return redirect('article_list')
