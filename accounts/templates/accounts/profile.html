@@ -16,7 +16,7 @@
           <button type="button" class="btn btn-success">Follow</button>  <button type="button" class="btn btn-info">Send me a message</button>
 <br>
         </div>
-      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="{{current_user.profile.photo_avtar.url}}"></a>
+      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="{{current_user.profile.photo.url}}"></a>
 
         </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
         <!--/col-3-->
         <div class="col-sm-9" style="" contenteditable="false">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">About Me</div>
                 <div class="panel-body"> {{current_user.profile.bio}}
 
