@@ -11,48 +11,41 @@
     <div class="container">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Wrapper for slides -->
+        {% if user.is_authenticated %}
         <div class="carousel-inner">
             <div class="item active">
-                <img src="http://placehold.it/1200x400/16a085/ffffff&text=About Us">
+                <img src="http://placehold.it/1200x400/16a085/ffffff&text=Hi {{ user.username }}">
                 <div class="carousel-caption">
-                    <h3>
-                        Headline</h3>
                     <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
-                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+                       <p>Start by checking Your Profile</p>
+                        <p><a class="btn btn-default" href="{% url 'profile' %}" role="button">View Profile &raquo;</a></p>
+                    </p>
                 </div>
             </div>
             <!-- End Item -->
             <div class="item">
-                <img src="http://placehold.it/1200x400/e67e22/ffffff&text=Projects">
+                <img src="http://placehold.it/1200x400/e67e22/ffffff&text=Discover Ngos">
                 <div class="carousel-caption">
-                    <h3>
-                        Headline</h3>
                     <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
-                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+                        <p>View the best Ngos</p>
+                        <p><a class="btn btn-default" href="{% url 'ngo_list' %}" role="button">Organizations &raquo;</a></p>
+                    </p>
                 </div>
             </div>
             <!-- End Item -->
             <div class="item">
-                <img src="http://placehold.it/1200x400/2980b9/ffffff&text=Portfolio">
+                <img src="http://placehold.it/1200x400/2980b9/ffffff&text=Check Feeds">
                 <div class="carousel-caption">
-                    <h3>
-                        Headline</h3>
                     <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
-                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+                        <p>A Glance at All Happenings</p>
+                        <p><a class="btn btn-default" href="{% url 'user_feeds' %}" role="button">Feeds &raquo;</a></p>
+                    </p>
                 </div>
             </div>
             <!-- End Item -->
             <div class="item">
-                <img src="http://placehold.it/1200x400/8e44ad/ffffff&text=Services">
+                <img src="http://placehold.it/1200x400/8e44ad/ffffff&text=About Us">
                 <div class="carousel-caption">
-                    <h3>
-                        Headline</h3>
                     <p>
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
                         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
@@ -63,16 +56,64 @@
         </div>
         <!-- End Carousel Inner -->
         <ul class="nav nav-pills nav-justified">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">About<small>Lorem
-                ipsum dolor sit</small></a></li>
-            <li data-target="#myCarousel" data-slide-to="1"><a href="#">Ngo<small>Lorem ipsum
-                dolor sit</small></a></li>
-            <li data-target="#myCarousel" data-slide-to="2"><a href="#">Feeds<small>Lorem ipsum
-                dolor sit</small></a></li>
-            <li data-target="#myCarousel" data-slide-to="3"><a href="#">
-                <small>Lorem ipsum
-                dolor sit</small></a></li>
+            <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">Your profile</a></li>
+            <li data-target="#myCarousel" data-slide-to="1"><a href="#">Ngos</a></li>
+            <li data-target="#myCarousel" data-slide-to="2"><a href="#">Feeds</a></li>
+            <li data-target="#myCarousel" data-slide-to="3"><a href="#">About us</a></li>
         </ul>
+        <!-- if not AUTHENTICATED USER -->
+        {% else %}
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="http://placehold.it/1200x400/16a085/ffffff&text=Please Login">
+                <div class="carousel-caption">
+                    <p>
+                        <p>You Can't Proceed Without it..</p>
+                        <p><a class="btn btn-default" href="{% url 'login' %}" role="button">Login &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/2980b9/ffffff&text=Create Account">
+                <div class="carousel-caption">
+                    <p>
+                        <p>You'll Need one in order to surf </p>
+                        <p><a class="btn btn-default" href="{% url 'signup' %}" role="button">Signup &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/e67e22/ffffff&text=Discover Ngos">
+                <div class="carousel-caption">
+                    <p>
+                        <p>View the best Ngos</p>
+                        <p><a class="btn btn-default" href="{% url 'ngo_list' %}" role="button">Organizations &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/8e44ad/ffffff&text=About Us">
+                <div class="carousel-caption">
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
+                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+                </div>
+            </div>
+
+            <!-- End Item -->
+        </div>
+        <!-- End Carousel Inner -->
+        <ul class="nav nav-pills nav-justified">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">Your profile</a></li>
+            <li data-target="#myCarousel" data-slide-to="1"><a href="#">Ngos</a></li>
+            <li data-target="#myCarousel" data-slide-to="2"><a href="#">Feeds</a></li>
+            <li data-target="#myCarousel" data-slide-to="3"><a href="#">About us</a></li>
+        </ul>
+        {% endif %}
     </div>
     <!-- End Carousel -->
 </div>
@@ -80,44 +121,12 @@
 
 
 <!-- make profile -->
-<div class="container">
 
-      <div class="row">
-          {% if user.is_authenticated %}
-            <div class="col-md-4">
-            <h2>Hi {{ user.username }}</h2>
-            <p>Start by checking Your Profile</p>
-            <p><a class="btn btn-default" href="{% url 'profile' %}" role="button">View Profile &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Discover Ngos</h2>
-                <p>View the best Ngos</p>
-                <p><a class="btn btn-default" href="{% url 'ngo_list' %}" role="button">Organizations &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Check Feeds</h2>
-                <p>A Glance at All Happenings</p>
-                <p><a class="btn btn-default" href="{% url 'user_feeds' %}" role="button">Feeds &raquo;</a></p>
-            </div>
-          {% else %}
-            <div class="col-md-4">
-                <h2>Please Login</h2>
-                <p>You Can't Proceed Without it..</p>
-                <p><a class="btn btn-default" href="{% url 'login' %}" role="button">Login &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Create Account</h2>
-                <p>You'll Need one in order to surf </p>
-                <p><a class="btn btn-default" href="{% url 'signup' %}" role="button">Signup &raquo;</a></p>
-            </div>
-          {% endif %}
-  </div>
-</div>
 
 <!-- photo section -->
 <section class="work-info">
     <div class="container">
-        <h1 class="text-center">SECTION NAME</h1>
+        <h1 class="text-center">OUR AIM</h1>
           <hr>
         <div class="row">
 

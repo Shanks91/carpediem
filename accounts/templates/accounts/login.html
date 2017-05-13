@@ -1,84 +1,26 @@
-
+{% extends 'accounts/base.html' %}
 {% load static %}
-
-<html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>Bootstrap Login Form</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-
-		<link href="{% static 'css/bootstrap.min.css'  %}" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="{% static 'css/styles.css' %}" rel="stylesheet">
-	</head>
-	<body>
-
-    <!-- header -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'home' %}">CarpeDiem</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="{% block ahome %}{% endblock %}"><a href="{% url 'home' %}">Home</a></li>
-                <li class="{% block aordinem %}{% endblock %}"><a href="{% url 'ngo_list' %}">Ordinem</a></li>
-                <li class="{% block ablog %}{% endblock %}"><a href="{% url 'article_list' %}">Blog</a></li>
-                <li class="{% block afeeds %}{% endblock %}"><a href="{% url 'user_feeds' %}">Feeds</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; @{{ user.username }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                    <li><a href="{% url 'profile_detail' pk=request.user.id %}">Profile</a></li>
-                    <li role="separator" class="divider"></li>
-                        <li><a href="{% url 'article_draft'%}">Article Drafts <span class="badge">{{ drafts }}</span></a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
-                </ul>
-                </li>
-                {% else %}
-                   <li>
-                        <a href="{% url 'login' %}">
-                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp; Login
-                    </a>
-                   </li>
-                {% endif %}
-
-            </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
-
-
+{% block stylesheet %}
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
+{% endblock %}
+{% block ahome %}active{% endblock %}
+{% block body %}
 <!-- login model -->
 
-<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h1 class="text-center">Login</h1>
-      </div>
-      <div class="modal-body">
-          <form class="form col-md-12 center-block" method="POST" action="">
-            <div class="form-group">
+<div id="fullscreen_bg" class="fullscreen_bg"/>
+
+<div class="container">
+    <br>
+    <br>
+    <form class="form-signin" method="POST" action="">
+        <h1 class="form-signin-heading text-muted">Sign In</h1>
+		<div class="form-group" >
                 {% csrf_token %}
                 <p class="text-danger">{{ form.non_field_errors }}</p>
             </div>
-            <div class="form-group">
+        <br>
+        <div class="form-group">
               {{ form.username }}
                 {{ form.username.errors }}
             </div>
@@ -90,19 +32,11 @@
               <button class="btn btn-primary btn-lg btn-block">Sign In</button>
               <span class="pull-right"><a href="{% url 'signup' %}">Register</a></span><span><a href="#">Need help?</a></span>
             </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-          <div class="col-md-12">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		  </div>
-      </div>
-  </div>
-  </div>
+	</form>
 </div>
 
-	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	</body>
-</html>
+<br>
+<br>
+<br>
+<br><br>
+{% endblock %}

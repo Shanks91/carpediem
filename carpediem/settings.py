@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'blog',
     'imagekit',
     'postelo',
+    'humanize',
 
 
 ]
