@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^ordinem/', include('ordinem.urls')),
     url(r'^blog/', include('blog.urls')),
     url(r'^postelo/', include('postelo.urls')),
+    url(r'^search/$', include('search.urls')),
+
 ]
 
 if settings.DEBUG:

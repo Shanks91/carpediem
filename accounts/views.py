@@ -10,7 +10,11 @@ from django.core.exceptions import PermissionDenied
 
 
 def home(request):
-    return render(request, 'accounts/index.html')
+    if request.user.is_authenticated():
+        return redirect('user_feeds')
+    else:
+        return render(request, 'accounts/index.html')
+
 
 
 def signup(request):

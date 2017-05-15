@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ordinem',
     'accounts',
+    'search',
     'pagedown',
     'markdown_deux',
     'blog',

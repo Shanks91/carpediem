@@ -80,7 +80,7 @@
                             <div class="media">
                                   <div class="media-left">
                                     <a href="#">
-                                      <img class="media-object photo-profile" src="{{ comment.author.profile.photo.url }}" width="32" height="32" alt="...">
+                                      <img class="media-object photo-profile" src="{% if comment.author.profile.photo %}{{ comment.author.profile.photo_avatar.url }}{% else %}http://placehold.it/64x64{% endif %}" width="32" height="32" alt="...">
                                     </a>
                                   </div>
                                   <div class="media-body">

@@ -33,22 +33,25 @@
                 <a class="btn btn-primary" href="{% url 'article_detail' pk=article.id%}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
                 {% endfor %}
+                <!-- Pager -->
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if articles.has_previous %}
+                            <a href="?page={{ articles.previous_page_number }}">previous</a>
+                        {% endif %}
 
+                    <span class="current">
+                        Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+                     </span>
 
+                    {% if articles.has_next %}
+                        <a href="?page={{ articles.next_page_number }}">next</a>
+                    {% endif %}
+                    </span>
+                </div>
 
 
                 <hr>
-
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="#">&larr; Older</a>
-                    </li>
-                    <li class="next">
-                        <a href="#">Newer &rarr;</a>
-                    </li>
-                </ul>
-
             </div>
 
             <!-- Blog Sidebar Widgets Column -->
