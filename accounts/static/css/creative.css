@@ -155,7 +155,7 @@ header {
   background-size: cover;
   -o-background-size: cover;
   background-position: center;
-  background-image: {% 'static/img/header.jpg' %};
+  background-image: {% 'accounts/static/img/header1.jpg' %};
   text-align: center;
   color: white;
 }
