@@ -5,17 +5,60 @@
     <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block body %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-4">
-<h2>Post Happenings</h2>
+<br>
+<br>
+<br>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+<div class="row">
+    <div class="col-sm-3">
+        <a href="mail-compose.html" class="btn btn-danger btn-block btn-compose-email">Send Email</a>
+        <ul class="nav nav-pills nav-stacked nav-email shadow mb-20">
+            <li class="profile" >
+                <a href="{% url 'ngo_profile' pk=ngo.pk %}">
+                    <i class="fa fa-inbox"></i> Ngo Info <span class="label pull-right"></span>
+                </a>
+            </li>
+            <li class="profile">
+                <a href="{% url 'gallery' pk=ngo.pk %}"> <i class="fa fa-inbox"></i> Ngo Feeds <span class="label pull-right"></span></a>
+            </li>
+            <li class="profile" >
+                <a href="#"><i class="fa fa-certificate"></i> Blogs by Ngo </a>
+            </li>
+            <li class="profile">
+                <a href="#">
+                    <i class="fa fa-file-text-o"></i> Gallery <span class="label label-info pull-right inbox-notification"></span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- ngo user -->
+        {% if request.user.id == ngo.moderator.id %}
+        <h5 class="nav-email-subtitle">POST</h5>
+        <ul class="nav nav-pills nav-stacked nav-email shadow mb-20">
+            <li class="active" >
+                <a href="{% url 'post_happening' pk=ngo.id %}">
+                    <i class="fa fa-inbox"></i> Post Happening <span class="label pull-right"></span>
+                </a>
+            </li>
+            <li class="profile" >
+                <a href="{% url 'post_gallery' pk=ngo.id %}" ><i class="fa fa-inbox"></i> Post Pictures <span class="label pull-right"></span></a>
+            </li>
+        </ul>
+
+        {% endif %}
+    </div>
+    <div class="col-sm-9">
+
+	<h2>Post Events Taking Place</h2>
             <hr/>
-  <form method="post" class="form col-md-12 center-block" action="">
+  <form method="post" class="form col-md-12 center-block" action="" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-success">Post</button>
   </form>
-        </div>
     </div>
-    </div>
+</div>
+</div>
+
 {% endblock %}

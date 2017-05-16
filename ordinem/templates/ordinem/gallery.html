@@ -1,15 +1,54 @@
 {% extends 'accounts/base.html' %}
 {% load static %}
 {% block stylesheet %}
-    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'css/detail2.css' %}" type="text/css" rel="stylesheet"/>
+
 {% endblock %}
 {% block body %}
-    <div class="container">
-<h2>{{ ngo.name }}</h2>
-<h3>This Organization is Moderated by <a href="{% url 'profile_detail' pk=ngo.moderator.pk %}">@{{ ngo.moderator.username }}</a></h3>
-    <a href="{% url 'follow_ngo' npk=ngo.pk upk=request.user.id %}" type="submit" class="btn btn-primary">follow</a>
-<br/>
-<hr/>
+<br>
+<br>
+<br>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+<div class="row">
+    <div class="col-sm-3">
+        <a href="mail-compose.html" class="btn btn-danger btn-block btn-compose-email">Send Email</a>
+        <ul class="nav nav-pills nav-stacked nav-email shadow mb-20">
+            <li class="profile" >
+                <a href="{% url 'ngo_profile' pk=ngo.pk %}">
+                    <i class="fa fa-inbox"></i> Ngo Info <span class="label pull-right"></span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="{% url 'gallery' pk=ngo.pk %}" type="submit" class="btn btn-info"><i class="fa fa-envelope-o"></i> Ngo Feeds </a>
+            </li>
+            <li class="profile" >
+                <a href="#"><i class="fa fa-certificate"></i> Blogs by Ngo </a>
+            </li>
+            <li class="profile">
+                <a href="#">
+                    <i class="fa fa-file-text-o"></i> Gallery <span class="label label-info pull-right inbox-notification"></span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- ngo user -->
+        {% if request.user.id == ngo.moderator.id %}
+        <h5 class="nav-email-subtitle">POST</h5>
+        <ul class="nav nav-pills nav-stacked nav-email shadow mb-20">
+            <li class="profile" >
+                <a href="{% url 'post_happening' pk=ngo.id %}">
+                    <i class="fa fa-inbox"></i> Post Happening <span class="label pull-right"></span>
+                </a>
+            </li>
+            <li class="profile" >
+                <a href="{% url 'post_gallery' pk=ngo.id %}" ><i class="fa fa-inbox"></i> Post Pictures <span class="label pull-right"></span></a>
+            </li>
+        </ul>
+
+        {% endif %}/.nav -->
+    </div>
+    <div class="col-sm-9">
 
 	<div class="row">
 		<h2>Gallery</h2>
@@ -23,6 +62,7 @@
         {% endfor %}
     </div>
 </div>
-
+</div>
+    </div>
 
 {% endblock %}

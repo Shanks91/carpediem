@@ -3,13 +3,50 @@
 {% load crispy_forms_tags %}
 {% block afeeds %}active{% endblock %}
 {% block stylesheet %}
-
+    <link rel="stylesheet" href='{% static "css/bootstrap.min.css"%}'>
     <link href="{% static 'css/poststyle.css' %} }" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href='{% static "../../../maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"%}'>
+    <link rel="stylesheet" href='{% static "style/stylesheet.css"%}'>
+
 {% endblock %}
 {% block body %}
+<!-- profile view -->
+<div id="content-block">
+		<div class="container be-detail-container">
+			<div class="row">
+				<div class="col-xs-12 col-md-4 left-feild">
+					<div class="be-user-block style-3">
+						<div class="be-user-detail">
+							<a feed-id="{{ feed.pk }}" csrf="{{ csrf_token }}" class="be-ava-user style-2 feed-container" href="#">
+								<img src="{{ user.profile.photo.url }}" class="user" alt="abc">
+							</a>
+							<h1 class="be-use-name">{{user.first_name}} {{user.last_name}}</h1>
+							<div class="be-user-info">
+								{{user.profile.birth_date}}
+							</div>
+
+							<a class="be-user-site" href="http://www.phoenix.cool/"><i class="fa fa-link"></i> www.phoenix.cool</a>
+						</div>
+					</div>
+					<div class="be-desc-block">
+						<div class="be-desc-author">
+							<div class="be-desc-label">About Me</div>
+							<div class="clearfix"></div>
+							<div class="be-desc-text">
+                                {{current_user.profile.bio}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-8">
+                    <div class="tab-wrapper style-1">
+
+                        <div class="tabs-content clearfix">
+                            <div class="tab-info active">
+								<div class="row">
+<!-- end profile view -->
     <div class="container">
     <div class="row">
-    <h2>Feeds:</h2>
     <ul>
     {% for happening in happenings %}
     <div class="container">
@@ -80,11 +117,14 @@
         </div>
 	</div>
     </div>
+
 {% endfor %}
 
     </ul>
     </div>
     </div>
+    </div>
+                                </div></div></div></div></div></div></div>
 {% endblock %}
 
  {% block scripts %}

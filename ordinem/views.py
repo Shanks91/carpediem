@@ -1,8 +1,10 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NgoForm, HappeningForm, GalleryForm, HapCommentsForm, NgoRatingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Ngo, Happening, Gallery, HapComments
+from accounts.models import UserProfile
 from django.core.exceptions import PermissionDenied
 
 
@@ -25,7 +27,19 @@ def createngo(request):
 
 def ngolist(request):
     ngo_list = Ngo.objects.all()
+    paginator = Paginator(ngo_list, 25)  # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        ngo_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        ngo_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        ngo_list = paginator.page(paginator.num_pages)
     return render(request, 'ordinem/ngo_list.html', {'ngo_list': ngo_list})
+
 
 
 def ngoprofile(request, pk):
@@ -54,10 +68,10 @@ def post_happening(request, pk):
             happening.save()
             return redirect('ngo_profile', pk=pk)
         else:
-            return render(request, 'ordinem/post_h.html', {'form': form})
+            return render(request, 'ordinem/post_h.html', {'ngo':ngo,'form': form})
     else:
         form = HappeningForm()
-        return render(request, 'ordinem/post_h.html', {'form': form})
+        return render(request, 'ordinem/post_h.html', {'ngo':ngo,'form': form})
 
 
 @login_required()
@@ -73,10 +87,10 @@ def edit_happening(request, pk):
                 form.save()
                 return redirect('ngo_profile', pk=key)
             else:
-                return render(request, 'ordinem/post_h.html', {'form': form})
+                return render(request, 'ordinem/post_h.html', {'ngo':ngo,'form': form})
         else:
             form = HappeningForm(instance=hap_post)
-            return render(request, 'ordinem/post_h.html', {'form': form})
+            return render(request, 'ordinem/post_h.html', {'ngo':ngo,'form': form})
     else:
         raise PermissionDenied
 
@@ -116,10 +130,10 @@ def post_gallery(request, pk):
             gallery.save()
             return redirect('gallery', pk=pk)
         else:
-            return render(request, 'ordinem/post_g.html', {'form': form})
+            return render(request, 'ordinem/post_g.html', {'ngo':ngo,'form': form})
     else:
         form = GalleryForm()
-        return render(request, 'ordinem/post_g.html', {'form': form})
+        return render(request, 'ordinem/post_g.html', {'ngo':ngo,'form': form})
 
 
 def gallery_view(request, pk):
@@ -153,7 +167,7 @@ def happening_post_like(request, pk):
         hap_post.likes.remove(user)
     else:
         hap_post.likes.add(user)
-    return redirect('ngo_profile', pk=key)
+    return redirect('ngo_feeds', pk=key)
 
 
 @login_required()
@@ -194,3 +208,12 @@ def rate_ngo(request, pk):
     else:
         form = NgoRatingForm()
         return render(request, 'ordinem/rating_form.html', {'form': form})
+
+@login_required()
+def ngo_feeds(request, pk):
+    ngo = get_object_or_404(Ngo, id=pk)
+    user = request.user
+    user_profile = UserProfile.objects.get(id=user.pk)
+    ngos = user_profile.follows.all()
+    happenings = Happening.objects.filter(author__in=ngos)
+    return render(request, 'ordinem/ngo_feeds.html', {'ngo':ngo,'ngos': ngos, 'happenings': happenings})

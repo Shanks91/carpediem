@@ -4,6 +4,7 @@ from accounts.forms import SignUpForm, UserLoginForm, UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import UserProfile
+from ordinem.models import Ngo
 from ordinem.models import Happening
 from django.forms.models import inlineformset_factory
 from django.core.exceptions import PermissionDenied
@@ -119,3 +120,5 @@ def feeds_view(request):
     ngos = user_profile.follows.all()
     happenings = Happening.objects.filter(author__in=ngos)
     return render(request, 'accounts/user_feeds.html', {'ngos': ngos, 'happenings': happenings})
+
+

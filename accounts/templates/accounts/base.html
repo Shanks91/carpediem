@@ -12,6 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bodypad.css' %}" rel="stylesheet">
 
 
 
@@ -44,13 +45,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
-                    <li class="{% block ahome %}{% endblock %}"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="{% block afeeds %}{% endblock %}"><a href="{% url 'user_feeds' %}">Home</a></li>
                     <li class="{% block aordinem %}{% endblock %}"><a href="{% url 'ngo_list' %}">Ngo</a></li>
                     <li class="{% block ablog %}{% endblock %}"><a href="{% url 'article_list' %}">Blog</a></li>
-                    <li class="{% block afeeds %}{% endblock %}"><a href="{% url 'user_feeds' %}">Feeds</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-
+                    <li><a href="{% url 'ngo_signup' %}">Register an Organization</a></li>
                     <li><a href="{% url 'message_inbox' %}">
                     <span class="glyphicon glyphicon-envelope"></span>
                         Inbox
@@ -61,7 +61,6 @@
                     <ul class="dropdown-menu">
                     <li><a href="{% url 'profile_detail' pk=request.user.id %}">Profile</a></li>
                     <li role="separator" class="divider"></li>
-                        <li><a href="{% url 'ngo_signup' %}">Register an Organization</a></li>
                         <li><a href="{% url 'article_create' %}">Write Article</a></li>
                         <li><a href="{% url 'article_draft'%}">Article Drafts <span class="badge">{{ drafts }}</span></a></li>
                     <li role="separator" class="divider"></li>
