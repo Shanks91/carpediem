@@ -41,7 +41,6 @@ def ngolist(request):
     return render(request, 'ordinem/ngo_list.html', {'ngo_list': ngo_list})
 
 
-
 def ngoprofile(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
     user = request.user
@@ -217,3 +216,9 @@ def ngo_feeds(request, pk):
     ngos = user_profile.follows.all()
     happenings = Happening.objects.filter(author__in=ngos)
     return render(request, 'ordinem/ngo_feeds.html', {'ngo':ngo,'ngos': ngos, 'happenings': happenings})
+
+
+def ngo_search(request):
+    query = request.GET.get("q")
+    ngo_list = Ngo.objects.filter(name__icontains=query)
+    return render(request, 'ordinem/ngo_list.html', {'ngo_list': ngo_list})

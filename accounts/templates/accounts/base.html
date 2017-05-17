@@ -31,26 +31,27 @@
   </head>
 
   <body>
-    {% if user.is_authenticated %}
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top"  >
-        <div class="container-fluid" >
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header" >
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">CarpeDiem</a>
-            </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'home' %}">CarpeDiem</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% block ahome %}{% endblock %}"><a href="{% url 'home' %}">Home</a></li>
+                <li class="{% block aordinem %}{% endblock %}"><a href="{% url 'ngo_list' %}">Ngo</a></li>
+                <li class="{% block ablog %}{% endblock %}"><a href="{% url 'article_list' %}">Blog</a></li>
+                <li class="{% block afeeds %}{% endblock %}"><a href="{% url 'user_feeds' %}">Feeds</a></li>
+            </ul>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="{% block afeeds %}{% endblock %}"><a href="{% url 'user_feeds' %}">Home</a></li>
-                    <li class="{% block aordinem %}{% endblock %}"><a href="{% url 'ngo_list' %}">Ngo</a></li>
-                    <li class="{% block ablog %}{% endblock %}"><a href="{% url 'article_list' %}">Blog</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'ngo_signup' %}">Register an Organization</a></li>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
                     <li><a href="{% url 'message_inbox' %}">
                     <span class="glyphicon glyphicon-envelope"></span>
                         Inbox
@@ -61,55 +62,30 @@
                     <ul class="dropdown-menu">
                     <li><a href="{% url 'profile_detail' pk=request.user.id %}">Profile</a></li>
                     <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'ngo_signup' %}">Register an Organization</a></li>
                         <li><a href="{% url 'article_create' %}">Write Article</a></li>
                         <li><a href="{% url 'article_draft'%}">Article Drafts <span class="badge">{{ drafts }}</span></a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
                 </ul>
                 </li>
-                </ul>
-     {% else %}
-                    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">CarpeDiem</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
-                    <li>
-                        <a href="#about">Home</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Ngo</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#portfolio">Blog</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">About Us</a>
-                    </li>
-                </ul>
-                   <ul class="nav navbar-nav navbar-right">
+                {% else %}
                    <li>
                         <a href="{% url 'login' %}">
                         <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp; Login
                     </a>
                    </li>
-                    </ul>
-            </div>
-      {% endif %}
+                {% endif %}
 
-
-            <!-- /.navbar-collapse -->
-
-        </div>
-        <!-- /.container-fluid -->
+            </ul>
+            <form class="navbar-form navbar-right" method="GET" action="{% url 'ngo_search' %}">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="q" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-success">Search</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+      </div>
     </nav>
     {% block body %}
     {% endblock %}

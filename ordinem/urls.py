@@ -4,6 +4,7 @@ from ordinem import views
 
 urlpatterns = [
     url(r'^ngo/$', views.ngolist, name='ngo_list'),
+    url(r'^ngo/search/$', views.ngo_search, name='ngo_search'),
     url(r'^ngo/signup/$', views.createngo, name='ngo_signup'),
     url(r'^ngo/detail/(?P<pk>\d+)/$', views.ngoprofile, name='ngo_profile'),
     url(r'^ngo/detail/(?P<pk>\d+)/gallery/$', views.gallery_view, name='gallery'),
