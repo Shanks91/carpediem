@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NgoForm, HappeningForm, GalleryForm, HapCommentsForm, NgoRatingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 from .models import Ngo, Happening, Gallery, HapComments
 from accounts.models import UserProfile
 from django.core.exceptions import PermissionDenied
@@ -41,6 +42,7 @@ def ngolist(request):
     return render(request, 'ordinem/ngo_list.html', {'ngo_list': ngo_list})
 
 
+@login_required()
 def ngoprofile(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
     user = request.user
@@ -134,7 +136,7 @@ def post_gallery(request, pk):
         form = GalleryForm()
         return render(request, 'ordinem/post_g.html', {'ngo':ngo,'form': form})
 
-
+@login_required()
 def gallery_view(request, pk):
     ngo = get_object_or_404(Ngo, id=pk)
     galleries = Gallery.objects.filter(owner=ngo)
@@ -220,5 +222,11 @@ def ngo_feeds(request, pk):
 
 def ngo_search(request):
     query = request.GET.get("q")
-    ngo_list = Ngo.objects.filter(name__icontains=query)
+    ngo_list = Ngo.objects.filter(
+                    Q(name__icontains=query) |
+                    Q(address__icontains=query) |
+                    Q(category__icontains=query) |
+                    Q(moderator__first_name__icontains=query) |
+                    Q(moderator__last_name__icontains=query)
+                  ).distinct()
     return render(request, 'ordinem/ngo_list.html', {'ngo_list': ngo_list})
