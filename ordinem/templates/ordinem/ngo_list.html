@@ -3,11 +3,13 @@
 {% block aordinem %}active{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href='{% static "css/bootstrap.min.css"%}'>
+    <link rel="stylesheet" href='{% static "css/stylesheet.css" %}'>
     <link href="{% static 'css/poststyle.css' %} }" type="text/css" rel="stylesheet"/>
     <link rel="stylesheet" href='{% static "../../../maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"%}'>
     <link rel="stylesheet" href='{% static "style/stylesheet.css"%}'>
-     <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
      <link href="{% static 'css/ngoliststyle.css' %}" rel="stylesheet" type="text/css"/>
+
+
 {% endblock %}
 {% block body %}
 <div id="content-block">
@@ -17,14 +19,13 @@
 					<div class="be-user-block style-3">
 						<div class="be-user-detail">
 							<a feed-id="{{ feed.pk }}" csrf="{{ csrf_token }}" class="be-ava-user style-2 feed-container" href="#">
-								<img src="{{ user.profile.photo.url }}" class="user" alt="abc">
+								<img src="{{ user.profile.get_photo_url }}" class="user" alt="abc">
 							</a>
 							<h1 class="be-use-name">{{user.first_name}} {{user.last_name}}</h1>
 							<div class="be-user-info">
 								{{user.profile.birth_date}}
 							</div>
 
-							<a class="be-user-site" href="http://www.phoenix.cool/"><i class="fa fa-link"></i> www.phoenix.cool</a>
 						</div>
 					</div>
 					<div class="be-desc-block">
@@ -32,7 +33,7 @@
 							<div class="be-desc-label">About Me</div>
 							<div class="clearfix"></div>
 							<div class="be-desc-text">
-                                {{current_user.profile.bio}}
+                                {{user.profile.bio}}
 							</div>
 						</div>
 					</div>
@@ -43,6 +44,8 @@
                         <div class="tabs-content clearfix">
                             <div class="tab-info active">
 								<div class="row">
+             </div>
+         </div>
 <!-- end profile view -->
 <div class="container">
 	<div class="row">

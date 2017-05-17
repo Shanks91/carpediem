@@ -4,50 +4,34 @@
 {% block afeeds %}active{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href='{% static "css/bootstrap.min.css"%}'>
-    <link href="{% static 'css/poststyle.css' %} }" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/poststyle.css' %}" type="text/css" rel="stylesheet"/>
     <link rel="stylesheet" href='{% static "../../../maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"%}'>
-    <link rel="stylesheet" href='{% static "style/stylesheet.css"%}'>
+    <link rel="stylesheet" href='{% static "css/stylesheet.css"%}'>
+    <link href="{% static 'css/poststyle.css' %} }" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/profilestyle.css' %}" rel="stylesheet" />
 
 {% endblock %}
 {% block body %}
 <!-- profile view -->
-<div id="content-block">
-		<div class="container be-detail-container">
-			<div class="row">
-				<div class="col-xs-12 col-md-4 left-feild">
-					<div class="be-user-block style-3">
-						<div class="be-user-detail">
-							<a feed-id="{{ feed.pk }}" csrf="{{ csrf_token }}" class="be-ava-user style-2 feed-container" href="#">
-								<img src="{{ user.profile.photo.url }}" class="user" alt="abc">
-							</a>
-							<h1 class="be-use-name">{{user.first_name}} {{user.last_name}}</h1>
-							<div class="be-user-info">
-								{{user.profile.birth_date}}
-							</div>
-
-							<a class="be-user-site" href="http://www.phoenix.cool/"><i class="fa fa-link"></i> www.phoenix.cool</a>
-						</div>
-					</div>
-					<div class="be-desc-block">
-						<div class="be-desc-author">
-							<div class="be-desc-label">About Me</div>
-							<div class="clearfix"></div>
-							<div class="be-desc-text">
-                                {{current_user.profile.bio}}
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-12 col-md-8">
-                    <div class="tab-wrapper style-1">
-
-                        <div class="tabs-content clearfix">
-                            <div class="tab-info active">
-								<div class="row">
 <!-- end profile view -->
+    <br>
+    <br>
+    <br>
     <div class="container">
     <div class="row">
-    <ul>
+
+     <div class="col-sm-3">
+        <ul class="list-group">
+                <li class="list-group-item " contenteditable="false">Profile</li>
+                <li class="list-group-item ">{{current_user.username}}</li>
+                <li class="list-group-item ">{{current_user.profile.gender}} </li>
+                <li class="list-group-item ">{{current_user.profile.birth_date}}</li>
+                <li class="list-group-item ">{{current_user.email}}</li>
+            </ul>
+     </div>
+
+     <div class="col-sm-6">
     {% for happening in happenings %}
     <div class="container">
     <div class="col-md-5">
@@ -59,17 +43,26 @@
                             <div class="media">
                               <div class="media-left">
                                 <a href="#">
-                                  <img class="media-object photo-profile" src="{{ ngo.logo.url }}" width="40" height="40" alt="...">
+                                  <img class="media-object photo-profile" src="{{ happening.author.get_logo_url }}" width="40" height="40" alt="...">
                                 </a>
                               </div>
                               <div class="media-body">
-                                <a href="#" class="anchor-username"><h4 class="media-heading">{{ ngo.name }}</h4></a>
-                                <a href="#" class="anchor-time">{{ happening.creation_date }}</a>
+                                <a href="#" class="anchor-username"><h4 class="media-heading">{{ happening.author.name }}</h4></a>
+                                <a href="#" class="anchor-time">{{ happening.creation_date|timesince }}</a>
                               </div>
                             </div>
                         </div>
                          <div class="col-md-1">
-                             <a href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                             <div class="dropdown">
+                             <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="{% url 'edit_happening' pk=happening.id %}">
+                                    <span class="glyphicon glyphicon glyphicon-edit"></span> Edit Post</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{% url 'delete_happening' pk=happening.id %}">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> Delete Post</a></li>
+                              </ul>
+                             </div>
                          </div>
                     </div>
                </section>
@@ -78,53 +71,63 @@
                </section>
               <section class="post-footer">
                    <hr>
-                   <div class="post-footer-option ">
+                   <div class="post-footer-option container">
                         <ul class="list-unstyled">
-                            <li><a href="#"><i class="glyphicon glyphicon-thumbs-up"></i> Like</a></li>
-                            <li><a href="#"><i class="glyphicon glyphicon-share-alt"></i> Share</a>
+                            <li><a href="{% url 'like_happening' pk=happening.id %}"><i class="glyphicon glyphicon-thumbs-up"></i>
+                              {% if request.user in happening.likes.all %}Unlike{% else %}like{% endif %} &#40 {{ happening.likes.count }} &#41</a></li>
+                            <li><a href="#collapseComment{{ happening.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseComment{{ happening.id }}"><i class="glyphicon glyphicon-comment"></i> Comment</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-share-alt"></i> Share</a></li>
                         </ul>
-                            <div id="flip"><i class="glyphicon glyphicon-comment"></i> Comment</div>
-                            <div id="panel">hello
-                            </div>
-
-
-                  <!--<div class="post-footer-comment-wrapper">
+                   </div>
+                  <div class="post-footer-comment-wrapper">
                        <div class="comment-form">
+                        <div class="collapse" id="collapseComment{{ happening.id }}">
+                            <div class="well">
+                                <form class="form" action="" method="post">
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="3"></textarea>
 
-                       </div>
-                        {% for comment in comments %}
-                        {% if comment.comment_on == happening %}
-                            <div class="comment">
-                            <div class="media">
-                              <div class="media-left">
-                                <a href="#">
-                                  <img class="media-object photo-profile" src="{{ comment.author.user.profile.photo.url }}" width="32" height="32" alt="...">
-                                </a>
-                              </div>
-                              <div class="media-body">
-                                <a href="#" class="anchor-username"><h4 class="media-heading">{{ comment.author.username }}</h4></a>
-                                <a href="#" class="anchor-time">{{ comment.time_stamp }}</a>
-                              </div>
-                                <p>{{ comment.content }}</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-block">Post</button>
+                                </form>
                             </div>
+                        </div>
                        </div>
+
+                            <div class="comment">
+                            {% for comment in comments %}
+                            {% if comment.comment_on == happening %}
+                            <div class="media">
+                                  <div class="media-left">
+                                    <a href="#">
+                                      <img class="media-object photo-profile" src="{{ comment.author.profile.photo.url }}" width="32" height="32" alt="...">
+                                    </a>
+                                  </div>
+                                  <div class="media-body">
+                                    <a href="#" class="anchor-username"><h4 class="media-heading">{{ comment.author.username }}</h4></a>
+                                    <a href="#" class="anchor-time">{{ comment.time_stamp|timesince }}</a>
+                                  </div>
+                                    <p>{{ comment.content }}</p>
+                            </div>
                             {% endif %}
                             {% endfor %}
-                    </div> -->
-                       </div>
-               </section>
+                      </div>
+
+
+                  </div>
+
+              </section>
             </div>
         </div>
 	</div>
     </div>
-
 {% endfor %}
 
-    </ul>
+
     </div>
     </div>
     </div>
-                                </div></div></div></div></div></div></div>
+
 {% endblock %}
 
  {% block scripts %}

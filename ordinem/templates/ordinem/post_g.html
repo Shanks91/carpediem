@@ -44,6 +44,11 @@
             <li class="active" >
                 <a href="{% url 'post_gallery' pk=ngo.id %}" ><i class="fa fa-inbox"></i> Post Pictures <span class="label pull-right"></span></a>
             </li>
+            <li class="profile" >
+                <a href="{% url 'post_happening' pk=ngo.id %}">
+                    <i class="fa fa-inbox"></i> Edit <span class="label pull-right"></span>
+                </a>
+            </li>
         </ul>
 
         {% endif %}

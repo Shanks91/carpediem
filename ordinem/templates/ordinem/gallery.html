@@ -19,13 +19,13 @@
                     <i class="fa fa-inbox"></i> Ngo Info <span class="label pull-right"></span>
                 </a>
             </li>
-            <li class="active">
-                <a href="{% url 'gallery' pk=ngo.pk %}" type="submit" class="btn btn-info"><i class="fa fa-envelope-o"></i> Ngo Feeds </a>
+            <li class="profile">
+                <a href="{% url 'ngo_feeds' pk=ngo.pk %}"><i class="fa fa-inbox"></i>  Ngo Feeds <span class="label pull-right"></span></a>
             </li>
             <li class="profile" >
                 <a href="#"><i class="fa fa-certificate"></i> Blogs by Ngo </a>
             </li>
-            <li class="profile">
+            <li class="active">
                 <a href="#">
                     <i class="fa fa-file-text-o"></i> Gallery <span class="label label-info pull-right inbox-notification"></span>
                 </a>
@@ -44,9 +44,14 @@
             <li class="profile" >
                 <a href="{% url 'post_gallery' pk=ngo.id %}" ><i class="fa fa-inbox"></i> Post Pictures <span class="label pull-right"></span></a>
             </li>
+            <li class="profile" >
+                <a href="{% url 'post_happening' pk=ngo.id %}">
+                    <i class="fa fa-inbox"></i> Edit <span class="label pull-right"></span>
+                </a>
+            </li>
         </ul>
 
-        {% endif %}/.nav -->
+        {% endif %}
     </div>
     <div class="col-sm-9">
 

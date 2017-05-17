@@ -32,6 +32,13 @@ class Ngo(models.Model):
     def get_live_id(self):
         return self.pk
 
+    def get_logo_url(self):
+        if self.logo:
+            return self.logo.url
+        else:
+            placehold = "http://placehold.it/300X300/"
+            return placehold
+
     def calculate_ratings(self):
         five_star_count = NgoRatings.objects.filter(ngo=self).filter(rating=5).count()
         four_star_count = NgoRatings.objects.filter(ngo=self).filter(rating=4).count()

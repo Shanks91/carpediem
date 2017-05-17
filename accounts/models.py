@@ -34,6 +34,14 @@ class UserProfile(models.Model):
         else:
             return False
 
+    def get_photo_url(self):
+        if self.photo:
+            return self.photo.url
+        else:
+            placehold="http://placehold.it/300X300/"
+            return placehold
+
+
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
